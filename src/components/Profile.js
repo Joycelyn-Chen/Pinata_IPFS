@@ -2,7 +2,7 @@ import Navbar from "./Navbar";
 import { useLocation, useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NFTTile from "./NFTTile";
 
 export default function Profile () {
@@ -10,6 +10,14 @@ export default function Profile () {
     const [address, updateAddress] = useState("0x");
     const [totalPrice, updateTotalPrice] = useState("0");
     const [dataFetched, updateFetched] = useState(false);
+    const params = useParams();
+    useEffect(()=>{
+        
+         const tokenId = params.tokenId;
+        if (!dataFetched)
+        getNFTData(tokenId);
+    
+    },[dataFetched])
 
     async function getNFTData(tokenId) {
         const ethers = require('ethers');
@@ -49,10 +57,7 @@ export default function Profile () {
         updateTotalPrice(sumPrice.toPrecision(3));
     }
 
-    const params = useParams();
-    const tokenId = params.tokenId;
-    if (!dataFetched)
-        getNFTData(tokenId);
+    
     
     return (
         <div className="profileClass" style={{"min-height":"100vh"}}>

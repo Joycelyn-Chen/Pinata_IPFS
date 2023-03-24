@@ -79,7 +79,7 @@ export default function SellNFT () {
             window.location.replace('/');
         }
         catch(e) {
-            alert(`Upload error ${e}`);
+            console.log(`Upload error ${e}`);
         }
     }
 

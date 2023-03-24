@@ -3,7 +3,7 @@ import axie from "../tile.jpeg";
 import { useLocation, useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function NFTPage (props) {
 
@@ -11,6 +11,12 @@ export default function NFTPage (props) {
     const [dataFetched, updateDataFetched] = useState(false);
     const [message, updateMessage] = useState("");
     const [currAddress, updateCurrAddress] = useState("0x");
+    const params = useParams();
+    const tokenId = params.tokenId;
+    useEffect(()=>{
+        if (!dataFetched)
+            getNFTData(tokenId);
+        },[dataFetched])
 
     async function getNFTData(tokenId) {
         const ethers = require('ethers');
@@ -54,15 +60,13 @@ export default function NFTPage (props) {
         }
     }
 
-    const params = useParams();
-    const tokenId = params.tokenId;
-    if (!dataFetched)
-        getNFTData(tokenId);
+    
+    
 
 
     return(
         <div style={{"min-height":"100vh"}}>
-            <Navbar></Navbar>
+            <Navbar/>
             <div className="flex ml-20 mt-20">
                 <img src={data.image} alt="" className="w-2/5" />
                 <div className="text-xl ml-20 space-y-8 text-white shadow-2xl rounded-lg border-2 p-5">
