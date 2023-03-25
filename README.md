@@ -17,8 +17,8 @@ REACT_APP_PRIVATE_KEY=
 ```
 run the below command
 ```bash
-git clone https://github.com/SoftTalents/PetDog_NFT_Marketplace.git
-cd PetDog_NFT_Marketplace
+git clone https://github.com/Joycelyn-Chen/Pinata_IPFS.git
+cd Pinata_IPFS
 npm install
 npm start
 ```
