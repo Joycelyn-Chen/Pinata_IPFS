@@ -1,9 +1,9 @@
 import Navbar from "./Navbar";
-import axie from "../tile.jpeg";
 import { useLocation, useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSnackbar } from 'notistack';
 
 export default function NFTPage (props) {
 
@@ -17,7 +17,7 @@ export default function NFTPage (props) {
         if (!dataFetched)
             getNFTData(tokenId);
         },[dataFetched])
-
+    const { enqueueSnackbar } = useSnackbar();
     async function getNFTData(tokenId) {
         const ethers = require('ethers');
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -54,9 +54,9 @@ export default function NFTPage (props) {
             let transaction = await contract.executeSale(tokenId, { value: salePrice });
             await transaction.wait();
 
-            alert('You successfully bought the NFT!');
+            enqueueSnackbar('You successfully bought the NFT!',{ autoHideDuration:3000 });
         } catch(e) {
-            alert(`Upload Error ${e}`);
+            enqueueSnackbar(`Upload Error ${e}`,{ autoHideDuration: 3000 });
         }
     }
 
