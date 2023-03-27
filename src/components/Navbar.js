@@ -12,10 +12,12 @@ import { useLocation } from 'react-router';
 
 function Navbar() {
 
+  // Define state variables
   const [connected, toggleConnect] = useState(false);
   const location = useLocation();
   const [currAddress, updateAddress] = useState('0x');
 
+  // Function to get the user's Ethereum address
   async function getAddress() {
     const ethers = require('ethers');
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -24,6 +26,7 @@ function Navbar() {
     updateAddress(addr);
   }
 
+  // Function to update the "Connect Wallet" button style based on the connection status
   function updateButton(status = true) {
     const ethereumButton = document.querySelector('.enableEthereumButton');
     toggleConnect(status);
@@ -40,6 +43,7 @@ function Navbar() {
     }
   }
 
+  // Function to connect the website to the user's MetaMask wallet
   async function connectWebsite() {
     const chainId = await window.ethereum.request({
       method: 'eth_chainId'
@@ -58,6 +62,7 @@ function Navbar() {
       });
   }
 
+  // Use the useEffect hook to check if the user is connected to MetaMask
   useEffect(() => {
     if (!window.ethereum.isMetaMask)
       return;
@@ -73,12 +78,14 @@ function Navbar() {
       getAddress();
       updateButton(val);
     }
-
-    window.ethereum.on('accountsChanged', function (accounts) {
+    
+    // Add an event listener for when the user changes accounts in MetaMask
+    window.ethereum.on('accountsChanged', function(accounts){
       window.location.replace(location.pathname)
     })
   });
 
+  // Return the navbar component with the appropriate links and button
   return (
     <div className="">
       <nav className="w-screen">

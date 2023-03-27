@@ -8,8 +8,12 @@ import { ColorRing } from 'react-loader-spinner'
 export default function SellNFT() {
     const [formParams, updateFormParams] = useState({ name: '', description: '', price: '' });
     const [fileURL, setFileURL] = useState(null);
+
+    // Import ethers.js library and initialize message state variable
     const ethers = require("ethers");
     const [message, updateMessage] = useState('');
+
+    // Get current URL location
     const location = useLocation();
     const { enqueueSnackbar } = useSnackbar();
     // upload NFT image to IPFS
@@ -29,12 +33,13 @@ export default function SellNFT() {
         }
     }
 
-    // upload metadata to IPFS
+    // Function to upload NFT metadata to IPFS
     async function uploadMetadataToIPFS() {
         const { name, description, price } = formParams;
-        // Make sure that none of the fields are empty.
+        // Check if form fields are empty
         if (!name || !description || !price || !fileURL)
             return null;
+        // Create JSON object with NFT metadata
         const nftJSON = {
             name, description, price, image: fileURL
         };
@@ -51,26 +56,33 @@ export default function SellNFT() {
         }
     }
 
+    // Function to list NFT for sale on the marketplace
     async function listNFT(e) {
         e.preventDefault();
 
-        // update data to IPFS
+        // Upload NFT metadata to IPFS
         try {
             const metadataURL = await uploadMetadataToIPFS();
             if (metadataURL == null) {
                 updateMessage(`Please check all fields filled`);
                 return;
             }
+            // Get provider and signer from Web3 provider
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             updateMessage(`Please wait... uploading`);
 
+            // Initialize marketplace contract using address and ABI from JSON file
             let contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
+
+            // Convert NFT price to wei using ethers.js utility function
             const price = ethers.utils.parseUnits(formParams.price, 'ether');
+
+            // Get listing price from marketplace contract
             let listingPrice = await contract.getListPrice();
             listingPrice = listingPrice.toString();
 
-            // actually create the NFT
+            // Create the NFT and list it for sale on the marketplace
             let transaction = await contract.createToken(metadataURL, price, { value: listingPrice });
             await transaction.wait();
 
@@ -86,6 +98,7 @@ export default function SellNFT() {
         }
     }
 
+    // Render the form
     return (
         <div className="">
             <Navbar />

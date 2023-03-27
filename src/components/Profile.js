@@ -1,16 +1,20 @@
-import Navbar from "./Navbar";
-import { useLocation, useParams } from 'react-router-dom';
+// Importing required dependencies
+import Navbar from "./Navbar"; 
+import { useLocation, useParams } from 'react-router-dom'; // Importing hooks from react-router-dom
 import MarketplaceJSON from "../Marketplace.json";
-import axios from "axios";
+import axios from "axios"; // Importing Axios for making HTTP requests
 import { useEffect, useState } from "react";
 import NFTTile from "./NFTTile";
 
+// Declaring the Profile component
 export default function Profile () {
-    const [data, updateData] = useState([]);
-    const [address, updateAddress] = useState("0x");
-    const [totalPrice, updateTotalPrice] = useState("0");
-    const [dataFetched, updateFetched] = useState(false);
-    const params = useParams();
+
+    // Initializing state variables
+    const [data, updateData] = useState([]); // NFT data array
+    const [address, updateAddress] = useState("0x"); // Wallet address
+    const [totalPrice, updateTotalPrice] = useState("0"); // Total value of NFTs
+    const [dataFetched, updateFetched] = useState(false); // Boolean flag to check if data is fetched
+    const params = useParams(); // Retrieving route parameters
     useEffect(()=>{
         
          const tokenId = params.tokenId;
@@ -19,19 +23,23 @@ export default function Profile () {
     
     },[dataFetched])
 
+    // Async function to fetch NFT data
     async function getNFTData(tokenId) {
-        const ethers = require('ethers');
+        const ethers = require('ethers'); // Importing ethers.js library
         let sumPrice = 0;
 
+        // Initializing provider and signer objects
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
-        const addr = await signer.getAddress();
+        const addr = await signer.getAddress(); // Retrieving wallet address
 
+        // Initializing contract object
         let contract = new ethers.Contract(MarketplaceJSON.address, MarketplaceJSON.abi, signer);
 
-        // get My NFTs
+        // Retrieving NFTs for the user
         let transaction = await contract.getMyNFTs();
 
+        // Fetching NFT metadata for each NFT
         const items = await Promise.all(transaction.map(async i => {
             const tokenURI = await contract.tokenURI(i.tokenId);
             let meta = await axios.get(tokenURI);
@@ -39,6 +47,8 @@ export default function Profile () {
 
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
             let item = {
+
+                // Extracting required data from the metadata
                 price,
                 tokenId: i.tokenId.toNumber(),
                 seller: i.seller,
@@ -51,14 +61,14 @@ export default function Profile () {
             return item;
         }))
 
+        // Updating state variables with fetched data
         updateData(items);
         updateFetched(true);
         updateAddress(addr);
         updateTotalPrice(sumPrice.toPrecision(3));
     }
 
-    
-    
+    // Rendering the Profile component
     return (
         <div className="profileClass" style={{"min-height":"100vh"}}>
             <Navbar></Navbar>
