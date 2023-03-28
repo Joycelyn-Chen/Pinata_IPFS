@@ -18,6 +18,18 @@ export default function SellNFT() {
     const { enqueueSnackbar } = useSnackbar();
     // upload NFT image to IPFS
     async function OnChangeFile(e) {
+         // Check if price is greater than 0.01 ETH
+         const price = parseFloat(formParams.price);
+         if (price < 0.01) {
+             updateMessage('Price must be at least 0.01 ETH');
+             return;
+         }
+ 
+         // Additional check for the price field
+         if (isNaN(price)) {
+             updateMessage('Price must be a number');
+             return;
+     }
         updateMessage(`Uploading file to IPFS.........`);
         var file = e.target.files[0];
         try {
@@ -60,6 +72,19 @@ export default function SellNFT() {
     async function listNFT(e) {
         e.preventDefault();
 
+        // Check if price is greater than 0.01 ETH
+        const price = parseFloat(formParams.price);
+        if (price < 0.01) {
+            updateMessage('Price must be at least 0.01 ETH');
+            return;
+        }
+
+        // Additional check for the price field
+        if (isNaN(price)) {
+            updateMessage('Price must be a number');
+            return;
+    }
+
         // Upload NFT metadata to IPFS
         try {
             const metadataURL = await uploadMetadataToIPFS();
@@ -76,14 +101,24 @@ export default function SellNFT() {
             let contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
 
             // Convert NFT price to wei using ethers.js utility function
-            const price = ethers.utils.parseUnits(formParams.price, 'ether');
+            const weiPrice = ethers.utils.parseUnits(price.toString(), 'ether');
+
+            // Check if user has sufficient balance to pay for gas
+            const gasLimit = await contract.estimateGas.createToken(metadataURL, weiPrice, { value: 0 });
+            const gasPrice = await provider.getGasPrice();
+            const gasCost = gasLimit.mul(gasPrice);
+            const balance = await provider.getBalance(signer.getAddress());
+            if (balance.lt(gasCost)) {
+                updateMessage('Insufficient balance to pay for gas');
+                return;
+            }
 
             // Get listing price from marketplace contract
             let listingPrice = await contract.getListPrice();
             listingPrice = listingPrice.toString();
 
             // Create the NFT and list it for sale on the marketplace
-            let transaction = await contract.createToken(metadataURL, price, { value: listingPrice });
+            let transaction = await contract.createToken(metadataURL, weiPrice, { value: listingPrice, gasLimit: gasLimit });
             await transaction.wait();
 
             enqueueSnackbar('Successfuly listed your NFT!', { autoHideDuration: 3000 });
