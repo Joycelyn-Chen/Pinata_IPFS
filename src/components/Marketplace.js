@@ -73,7 +73,9 @@ export default function Marketplace() {
         const items = await Promise.all(transaction.map(async i => {
 
             const tokenURI = await contract.tokenURI(i.tokenId);
-            let meta = await axios.get(tokenURI);
+            let meta = await axios.get(tokenURI,{  headers: {
+                'Accept': 'text/plain'
+              }});
             meta = meta.data;
 
             let price = ethers.utils.formatUnits(i.price.toString(), 'ether');
