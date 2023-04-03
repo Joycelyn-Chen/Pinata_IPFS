@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-import { useLocation, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -39,7 +39,6 @@ export default function NFTPage (props) {
         // Retrieving the metadata of the NFT from IPFS
         let meta = await axios.get(tokenURI);
         meta = meta.data;
-        console.log(listedToken);
 
         // Creating an object with relevant NFT data
         let item = {
@@ -51,7 +50,6 @@ export default function NFTPage (props) {
             name: meta.name,
             description: meta.description,
         }
-        console.log(item);
         // Updating the data state with the NFT data
         updateData(item);
     }
@@ -100,7 +98,7 @@ export default function NFTPage (props) {
                         Seller: <span className="text-sm">{data.seller}</span>
                     </div>
                     <div>
-                    { currAddress == data.owner || currAddress == data.seller ?
+                    { currAddress === data.owner || currAddress === data.seller ?
                         <div className="text-emerald-700">You are the owner of this NFT</div>
                         : <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
                     }

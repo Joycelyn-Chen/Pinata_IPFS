@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import { useState } from "react";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from '../Marketplace.json';
-import { useLocation } from "react-router";
 import { useSnackbar } from 'notistack';
 import { ColorRing } from 'react-loader-spinner'
 export default function SellNFT() {
@@ -12,9 +11,7 @@ export default function SellNFT() {
     // Import ethers.js library and initialize message state variable
     const ethers = require("ethers");
     const [message, updateMessage] = useState('');
-
-    // Get current URL location
-    const location = useLocation();
+   
     const { enqueueSnackbar } = useSnackbar();
     // upload NFT image to IPFS
     async function OnChangeFile(e) {

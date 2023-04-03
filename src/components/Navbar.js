@@ -1,11 +1,6 @@
 import fullLogo from '../app_logo.png';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
-  useRouteMatch,
-  useParams
 } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
@@ -74,13 +69,12 @@ function Navbar() {
     let val = window.ethereum.isConnected();
 
     if (val) {
-      console.log("here");
       getAddress();
       updateButton(val);
     }
-    
+
     // Add an event listener for when the user changes accounts in MetaMask
-    window.ethereum.on('accountsChanged', function(accounts){
+    window.ethereum.on('accountsChanged', function (accounts) {
       window.location.replace(location.pathname)
     })
   });
