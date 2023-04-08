@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import { useState } from "react";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from '../Marketplace.json';
-import { useLocation } from "react-router";
 import { useSnackbar } from 'notistack';
 import { ColorRing } from 'react-loader-spinner'
 
@@ -15,9 +14,7 @@ export default function SellNFT() {
     // Import ethers.js library and initialize message state variable
     const ethers = require("ethers");
     const [message, updateMessage] = useState('');
-
-    // Get current URL location
-    const location = useLocation();
+   
     const { enqueueSnackbar } = useSnackbar();
     // upload NFT image to IPFS
      
@@ -110,39 +107,28 @@ export default function SellNFT() {
         try {
             const metadataURL = await uploadMetadataToIPFS();
             if (metadataURL == null) {
-                updateMessage(`Please check all fields filled`);
+                updateMessage(`Please chekc all fields filled`);
                 return;
             }
-            // Get provider and signer from Web3 provider
+  // Get provider and signer from Web3 provider
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             updateMessage(`Please wait... uploading`);
 
             // Initialize marketplace contract using address and ABI from JSON file
             let contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
-
-            // Convert NFT price to wei using ethers.js utility function
-            const weiPrice = ethers.utils.parseUnits(price.toString(), 'ether');
-
-            // Check if user has sufficient balance to pay for gas
-            const gasLimit = await contract.estimateGas.createToken(metadataURL, weiPrice, { value: 0 });
-            const gasPrice = await provider.getGasPrice();
-            const gasCost = gasLimit.mul(gasPrice);
-            const balance = await provider.getBalance(signer.getAddress());
-            if (balance.lt(gasCost)) {
-                updateMessage('Insufficient balance to pay for gas');
-                return;
-            }
-
-            // Get listing price from marketplace contract
+              // Convert NFT price to wei using ethers.js utility function
+            const price = ethers.utils.parseUnits(formParams.price, 'ether');
+           // Get listing price from marketplace contract
             let listingPrice = await contract.getListPrice();
             listingPrice = listingPrice.toString();
 
-            // Create the NFT and list it for sale on the marketplace
-            let transaction = await contract.createToken(metadataURL, weiPrice, { value: listingPrice, gasLimit: gasLimit });
+            // actually create the NFT
+              // Create the NFT and list it for sale on the marketplace
+            let transaction = await contract.createToken(metadataURL, price, { value: listingPrice });
             await transaction.wait();
 
-            enqueueSnackbar('Successfuly listed your NFT!', { autoHideDuration: 3000 });
+            alert('Successfuly listed your NFT!');
             updateMessage('');
             updateFormParams({
                 name: '', description: '', price: ''

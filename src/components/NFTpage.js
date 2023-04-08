@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-import { useLocation, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -39,7 +39,6 @@ export default function NFTPage (props) {
         // Retrieving the metadata of the NFT from IPFS
         let meta = await axios.get(tokenURI);
         meta = meta.data;
-        console.log(listedToken);
 
         // Creating an object with relevant NFT data
         let item = {
@@ -51,7 +50,6 @@ export default function NFTPage (props) {
             name: meta.name,
             description: meta.description,
         }
-        console.log(item);
         // Updating the data state with the NFT data
         updateData(item);
     }
@@ -79,30 +77,28 @@ export default function NFTPage (props) {
 
     // Returning the JSX code for the NFT page
     return(
-        <div style={{minHeight: "100vh"}}>
-        <Navbar />
-        <div className="flex ml-20 mt-20">
-            <div className="text-xl ml-20 space-y-8 text-white shadow-2xl rounded-lg border-2 p-5 bg-gray-600">
-            <img src={data.image} alt="" className="w-2/5" />
-                <div>
-                    Name: {data.name}
-                </div>
-                <div>
-                    Description: {data.description}
-                </div>
-                <div>
-                    Price: <span className="text-green-400">{data.price + " ETH"}</span>
-                </div>
-                <div>
-                    Owner: <span className="text-sm text-gray-400">{data.owner}</span>
-                </div>
-                <div>
-                    Seller: <span className="text-sm text-gray-400">{data.seller}</span>
-                </div>
-                <div>
-                { !data.name || !data.description || !data.price || !data.owner || !data.seller ?
-                    <button className="bg-gray-400 cursor-not-allowed text-white font-bold py-2 px-4 rounded text-sm opacity-50" disabled>Buy this NFT</button>
-                    : currAddress == data.owner || currAddress == data.seller ?
+        <div style={{"min-height":"100vh"}}>
+            <Navbar/>
+            <div className="flex ml-20 mt-20">
+                <img src={data.image} alt="" className="w-2/5" />
+                <div className="text-xl ml-20 space-y-8 text-white shadow-2xl rounded-lg border-2 p-5">
+                    <div>
+                        Name: {data.name}
+                    </div>
+                    <div>
+                        Description: {data.description}
+                    </div>
+                    <div>
+                        Price: <span className="">{data.price + " ETH"}</span>
+                    </div>
+                    <div>
+                        Owner: <span className="text-sm">{data.owner}</span>
+                    </div>
+                    <div>
+                        Seller: <span className="text-sm">{data.seller}</span>
+                    </div>
+                    <div>
+                    { currAddress === data.owner || currAddress === data.seller ?
                         <div className="text-emerald-700">You are the owner of this NFT</div>
                         : <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
                 }
