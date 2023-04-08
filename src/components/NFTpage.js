@@ -100,9 +100,11 @@ export default function NFTPage (props) {
                         Seller: <span className="text-sm">{data.seller}</span>
                     </div>
                     <div>
-                    { currAddress == data.owner || currAddress == data.seller ?
-                        <div className="text-emerald-700">You are the owner of this NFT</div>
-                        : <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
+                    { !data.name || !data.description || !data.price || !data.owner || !data.seller ?
+                        <button className="bg-gray-400 cursor-not-allowed text-white font-bold py-2 px-4 rounded text-sm" disabled>Buy this NFT</button>
+                        : currAddress == data.owner || currAddress == data.seller ?
+                            <div className="text-emerald-700">You are the owner of this NFT</div>
+                            : <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
                     }
                     
                     <div className="text-green text-center mt-3">{message}</div>
