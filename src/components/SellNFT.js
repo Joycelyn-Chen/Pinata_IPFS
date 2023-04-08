@@ -20,6 +20,14 @@ export default function SellNFT() {
     const location = useLocation();
     const { enqueueSnackbar } = useSnackbar();
     // upload NFT image to IPFS
+     
+    function Example() {
+      return (
+        <div style={{ backgroundColor: 'white', width: '500px' }}>
+          This is the content of the pop-up.
+        </div>
+      );
+    }
     async function OnChangeFile(e) {
         // Check if price is greater than 0.01 ETH
         const price = parseFloat(formParams.price);
@@ -27,7 +35,7 @@ export default function SellNFT() {
             updateMessage('Price must be at least 0.01 ETH');
             return;
         }
-
+    
         // Additional check for the price field
         if (isNaN(price)) {
             updateMessage('Price must be a number');
@@ -38,16 +46,26 @@ export default function SellNFT() {
         try {
             const response = await uploadFileToIPFS(file);
             if (response.success === true) {
-                enqueueSnackbar(`Uploaded image to pinata: ${response.pinataURL}`, { autoHideDuration: 2000 });
+                const message = `Uploaded image to pinata: ${response.pinataURL}`;
+                updateMessage(message);
+                setTimeout(() => {
+                    updateMessage('');
+                }, 3000);
                 setFileURL(response.pinataURL);
             }
-            updateMessage('');
+            else {
+                updateMessage('');
+            }
         }
         catch (e) {
-            enqueueSnackbar(`Error during file upload ${e}`);
+            const message = `Error during file upload ${e}`;
+            updateMessage(message);
+            setTimeout(() => {
+                updateMessage('');
+            }, 2000);
         }
     }
-
+    
     // Function to upload NFT metadata to IPFS
     async function uploadMetadataToIPFS() {
         const { name, description, price } = formParams;

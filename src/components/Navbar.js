@@ -85,10 +85,10 @@ function Navbar() {
   // Return the navbar component with the appropriate links and button
   
   return (
-    <div className="bg-blue-500 bg-opacity-20">
-      <nav className="w-screen">
-        <ul className="flex items-end justify-between py-3 bg-transparent text-white pr-5">
-          <li className="flex items-end ml-5 pb-2">
+    <div className="min-w-screen bg-blue-500 bg-opacity-20">
+      <nav className="w-screen" style={{ width: "100%" }}>
+        <ul className="flex flex-wrap items-center justify-between py-3 bg-transparent text-white pr-5">
+          <li className="flex items-center ml-5 pb-2">
             <Link to="/">
               <img src={fullLogo} alt="" width={70} height={70} className="inline-block -mt-2 animate-pulse" />
               <div className="inline-block font-bold text-xl ml-2 tracking-widest">
@@ -96,50 +96,52 @@ function Navbar() {
               </div>
             </Link>
           </li>
-          <li className="w-2/6">
-            <ul className="lg:flex justify-between font-bold mr-10 text-lg">
-              {location.pathname === "/" ? (
-                <li className="border-b-2 hover:pb-0 p-2">
-                  <Link to="/">Marketplace</Link>
+          <li className="w-full lg:w-auto">
+            <div className="flex flex-wrap justify-center lg:justify-end">
+              <ul className="lg:flex justify-between font-bold text-lg mr-10">
+                {location.pathname === "/" ? (
+                  <li className="border-b-2 hover:pb-0 p-2">
+                    <Link to="/">Marketplace</Link>
+                  </li>
+                ) : (
+                  <li className="hover:border-b-2 hover:pb-0 p-2">
+                    <Link to="/">Marketplace</Link>
+                  </li>
+                )}
+                {location.pathname === "/sellNFT" ? (
+                  <li className="border-b-2 hover:pb-0 p-2">
+                    <Link to="/sellNFT">Add My NFT</Link>
+                  </li>
+                ) : (
+                  <li className="hover:border-b-2 hover:pb-0 p-2">
+                    <Link to="/sellNFT">Add My NFT</Link>
+                  </li>
+                )}
+                {location.pathname === "/profile" ? (
+                  <li className="border-b-2 hover:pb-0 p-2">
+                    <Link to="/profile">Profile</Link>
+                  </li>
+                ) : (
+                  <li className="hover:border-b-2 hover:pb-0 p-2">
+                    <Link to="/profile">Profile</Link>
+                  </li>
+                )}
+                <li>
+                  <button className={`enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-300 ease-in-out ${connected ? "bg-green-500" : "bg-yellow-500 hover:bg-yellow-600"}`} onClick={connectWebsite}>
+                    {connected ? "Connected" : "Connect Wallet"}
+                  </button>
                 </li>
-              ) : (
-                <li className="hover:border-b-2 hover:pb-0 p-2">
-                  <Link to="/">Marketplace</Link>
-                </li>
-              )}
-              {location.pathname === "/sellNFT" ? (
-                <li className="border-b-2 hover:pb-0 p-2">
-                  <Link to="/sellNFT">Add My NFT</Link>
-                </li>
-              ) : (
-                <li className="hover:border-b-2 hover:pb-0 p-2">
-                  <Link to="/sellNFT">Add My NFT</Link>
-                </li>
-              )}
-              {location.pathname === "/profile" ? (
-                <li className="border-b-2 hover:pb-0 p-2">
-                  <Link to="/profile">Profile</Link>
-                </li>
-              ) : (
-                <li className="hover:border-b-2 hover:pb-0 p-2">
-                  <Link to="/profile">Profile</Link>
-                </li>
-              )}
-              <li>
-                <button className={`enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-300 ease-in-out ${connected ? "bg-green-500" : "bg-yellow-500 hover:bg-yellow-600"}`} onClick={connectWebsite}>
-                  {connected ? "Connected" : "Connect Wallet"}
-                </button>
-              </li>
-            </ul>
+              </ul>
+            </div>
           </li>
         </ul>
       </nav>
-      <div className="flex justify-end mr-10">
-        <div className={`text-white font-bold text-sm ${currAddress !== "0x" ? "animate-bounce" : ""}`}>
+      <div className="flex justify-center lg:justify-end mr-10">
+        <div className={`text-white font-bold text-sm text-center lg:text-right ${currAddress !== "0x" ? "animate-bounce" : ""}`}>
           {currAddress !== "0x" ? `Connected to ${currAddress.substring(0, 15)}...` : "Not Connected. Please login to view NFTs"}
         </div>
       </div>
     </div>
-  );  
+  );
             }
 export default Navbar;
