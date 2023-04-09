@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Marketplace renders title 1`] = `
+<div>
+  <div
+    className=""
+  >
+    <nav
+      className="w-screen"
+    >
+      <ul
+        className="flex items-end justify-between py-3 bg-transparent text-white pr-5"
+      >
+        <li
+          className="flex items-end ml-5 pb-2"
+        >
+          <a
+            href="/"
+            onClick={[Function]}
+          >
+            <img
+              alt=""
+              className="inline-block -mt-2"
+              height={70}
+              src="app_logo.png"
+              width={70}
+            />
+            <div
+              className="inline-block font-bold text-xl ml-2 "
+              data-testid="app-name"
+            >
+              Pixel Emporium
+            </div>
+          </a>
+        </li>
+        <li
+          className="w-2/6"
+        >
+          <ul
+            className="lg:flex justify-between font-bold mr-10 text-lg"
+          >
+            <li
+              className="border-b-2 hover:pb-0 p-2"
+            >
+              <a
+                href="/"
+                onClick={[Function]}
+              >
+                Emporium
+              </a>
+            </li>
+            <li
+              className="hover:border-b-2 hover:pb-0 p-2"
+            >
+              <a
+                href="/sellNFT"
+                onClick={[Function]}
+              >
+                Add My NFT
+              </a>
+            </li>
+            <li
+              className="hover:border-b-2 hover:pb-0 p-2"
+            >
+              <a
+                href="/profile"
+                onClick={[Function]}
+              >
+                Profile
+              </a>
+            </li>
+            <li>
+              <button
+                className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm"
+                onClick={[Function]}
+              >
+                Connect Wallet
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <div
+      className="text-white text-bold text-right mr-10 text-sm"
+    >
+      Not Connected. Please login to view NFTs
+       
+    </div>
+  </div>
+  <div
+    className="flex flex-col place-items-center mt-20"
+  >
+    <div
+      className="md:text-xl font-bold text-white"
+    >
+      MOST POPULAR PIXELS
+    </div>
+    <div
+      className="flex mt-5 flex-wrap max-w-screen-xl text-center"
+    >
+      <a
+        className="border-2 ml-10 mr-10 mt-5 mb-12 flex flex-col items-center hover:opacity-50 rounded-lg"
+        href="/nftPage/undefined"
+        onClick={[Function]}
+      >
+        <div
+          className=" w-48 md:w-72 shadow-lg shadow-pink-200 "
+        >
+          <img
+            alt=""
+            className="w-72 h-80 rounded-lg object-cover"
+            src="https://gateway.pinata.cloud/ipfs/QmTcQR1wMsnxakNikzePPJee77NxDtuRBkzvWeHva9vmfq"
+          />
+          <div
+            className="text-white w-full p-2 bg-gradient-to-t from-[#454545] to-transparent rounded-lg pt-5 -mt-20"
+          >
+            <strong
+              className="text-xl"
+            >
+              NFT#1
+            </strong>
+            <p
+              className="display-inline"
+            >
+              Cute Dog
+            </p>
+          </div>
+        </div>
+      </a>
+      <a
+        className="border-2 ml-10 mr-10 mt-5 mb-12 flex flex-col items-center hover:opacity-50 rounded-lg"
+        href="/nftPage/undefined"
+        onClick={[Function]}
+      >
+        <div
+          className=" w-48 md:w-72 shadow-lg shadow-pink-200 "
+        >
+          <img
+            alt=""
+            className="w-72 h-80 rounded-lg object-cover"
+            src="https://gateway.pinata.cloud/ipfs/QmdUXeAUvjiwmS3htSYECxrr6ewjF27B3FYhuLfF33W1Bq"
+          />
+          <div
+            className="text-white w-full p-2 bg-gradient-to-t from-[#454545] to-transparent rounded-lg pt-5 -mt-20"
+          >
+            <strong
+              className="text-xl"
+            >
+              NFT#2
+            </strong>
+            <p
+              className="display-inline"
+            >
+              Fantastic Dog
+            </p>
+          </div>
+        </div>
+      </a>
+      <a
+        className="border-2 ml-10 mr-10 mt-5 mb-12 flex flex-col items-center hover:opacity-50 rounded-lg"
+        href="/nftPage/undefined"
+        onClick={[Function]}
+      >
+        <div
+          className=" w-48 md:w-72 shadow-lg shadow-pink-200 "
+        >
+          <img
+            alt=""
+            className="w-72 h-80 rounded-lg object-cover"
+            src="https://gateway.pinata.cloud/ipfs/QmbkEvueGNBbHduz3DAUX4vVzcYn8M4CVfitzQP1nw9tRG"
+          />
+          <div
+            className="text-white w-full p-2 bg-gradient-to-t from-[#454545] to-transparent rounded-lg pt-5 -mt-20"
+          >
+            <strong
+              className="text-xl"
+            >
+              NFT#3
+            </strong>
+            <p
+              className="display-inline"
+            >
+              Next Generation of Dog
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar tests renders Navbar component 1`] = `
+<div
+  className=""
+>
+  <nav
+    className="w-screen"
+  >
+    <ul
+      className="flex items-end justify-between py-3 bg-transparent text-white pr-5"
+    >
+      <li
+        className="flex items-end ml-5 pb-2"
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          <img
+            alt=""
+            className="inline-block -mt-2"
+            height={70}
+            src="app_logo.png"
+            width={70}
+          />
+          <div
+            className="inline-block font-bold text-xl ml-2 "
+            data-testid="app-name"
+          >
+            Pixel Emporium
+          </div>
+        </a>
+      </li>
+      <li
+        className="w-2/6"
+      >
+        <ul
+          className="lg:flex justify-between font-bold mr-10 text-lg"
+        >
+          <li
+            className="border-b-2 hover:pb-0 p-2"
+          >
+            <a
+              href="/"
+              onClick={[Function]}
+            >
+              Emporium
+            </a>
+          </li>
+          <li
+            className="hover:border-b-2 hover:pb-0 p-2"
+          >
+            <a
+              href="/sellNFT"
+              onClick={[Function]}
+            >
+              Add My NFT
+            </a>
+          </li>
+          <li
+            className="hover:border-b-2 hover:pb-0 p-2"
+          >
+            <a
+              href="/profile"
+              onClick={[Function]}
+            >
+              Profile
+            </a>
+          </li>
+          <li>
+            <button
+              className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm"
+              onClick={[Function]}
+            >
+              Connect Wallet
+            </button>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <div
+    className="text-white text-bold text-right mr-10 text-sm"
+  >
+    Not Connected. Please login to view NFTs
+     
+  </div>
+</div>
+`;

@@ -1,7 +1,5 @@
 import fullLogo from '../app_logo.png';
-import {
-  Link,
-} from "react-router-dom";
+import {Link} from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
@@ -67,7 +65,7 @@ function Navbar() {
     }
 
     let val = window.ethereum.isConnected();
-
+    console.log("val"+val);
     if (val) {
       getAddress();
       updateButton(val);
@@ -87,7 +85,7 @@ function Navbar() {
           <li className='flex items-end ml-5 pb-2'>
             <Link to="/">
               <img src={fullLogo} alt="" width={70} height={70} className="inline-block -mt-2" />
-              <div className='inline-block font-bold text-xl ml-2'>
+              <div data-testid="app-name" className='inline-block font-bold text-xl ml-2 '>
                 Pixel Emporium
               </div>
             </Link>
@@ -134,5 +132,4 @@ function Navbar() {
     </div>
   );
 }
-
 export default Navbar;
