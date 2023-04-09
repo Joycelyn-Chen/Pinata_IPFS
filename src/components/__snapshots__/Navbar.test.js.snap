@@ -2,16 +2,21 @@
 
 exports[`Navbar tests renders Navbar component 1`] = `
 <div
-  className=""
+  className="min-w-screen bg-blue-500 bg-opacity-20"
 >
   <nav
     className="w-screen"
+    style={
+      Object {
+        "width": "100%",
+      }
+    }
   >
     <ul
-      className="flex items-end justify-between py-3 bg-transparent text-white pr-5"
+      className="flex flex-wrap items-center justify-between py-3 bg-transparent text-white pr-5"
     >
       <li
-        className="flex items-end ml-5 pb-2"
+        className="flex items-center ml-5 pb-2"
       >
         <a
           href="/"
@@ -19,72 +24,78 @@ exports[`Navbar tests renders Navbar component 1`] = `
         >
           <img
             alt=""
-            className="inline-block -mt-2"
+            className="inline-block -mt-2 animate-pulse"
             height={70}
             src="app_logo.png"
             width={70}
           />
           <div
-            className="inline-block font-bold text-xl ml-2 "
-            data-testid="app-name"
+            className="inline-block font-bold text-xl ml-2 tracking-widest"
           >
-            Pixel Emporium
+            Crypto Emporium
           </div>
         </a>
       </li>
       <li
-        className="w-2/6"
+        className="w-full lg:w-auto"
       >
-        <ul
-          className="lg:flex justify-between font-bold mr-10 text-lg"
+        <div
+          className="flex flex-wrap justify-center lg:justify-end"
         >
-          <li
-            className="border-b-2 hover:pb-0 p-2"
+          <ul
+            className="lg:flex justify-between font-bold text-lg mr-10"
           >
-            <a
-              href="/"
-              onClick={[Function]}
+            <li
+              className="border-b-2 hover:pb-0 p-2"
             >
-              Emporium
-            </a>
-          </li>
-          <li
-            className="hover:border-b-2 hover:pb-0 p-2"
-          >
-            <a
-              href="/sellNFT"
-              onClick={[Function]}
+              <a
+                href="/"
+                onClick={[Function]}
+              >
+                Marketplace
+              </a>
+            </li>
+            <li
+              className="hover:border-b-2 hover:pb-0 p-2"
             >
-              Add My NFT
-            </a>
-          </li>
-          <li
-            className="hover:border-b-2 hover:pb-0 p-2"
-          >
-            <a
-              href="/profile"
-              onClick={[Function]}
+              <a
+                href="/sellNFT"
+                onClick={[Function]}
+              >
+                Add My NFT
+              </a>
+            </li>
+            <li
+              className="hover:border-b-2 hover:pb-0 p-2"
             >
-              Profile
-            </a>
-          </li>
-          <li>
-            <button
-              className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm"
-              onClick={[Function]}
-            >
-              Connect Wallet
-            </button>
-          </li>
-        </ul>
+              <a
+                href="/profile"
+                onClick={[Function]}
+              >
+                Profile
+              </a>
+            </li>
+            <li>
+              <button
+                className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-300 ease-in-out bg-yellow-500 hover:bg-yellow-600"
+                onClick={[Function]}
+              >
+                Connect Wallet
+              </button>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </nav>
   <div
-    className="text-white text-bold text-right mr-10 text-sm"
+    className="flex justify-center lg:justify-end mr-10"
   >
-    Not Connected. Please login to view NFTs
-     
+    <div
+      className="text-white font-bold text-sm text-center lg:text-right "
+    >
+      Not Connected. Please agin login to view NFTs
+    </div>
   </div>
 </div>
 `;
