@@ -30,8 +30,10 @@
     "eject": "react-scripts eject"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
-   },
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
