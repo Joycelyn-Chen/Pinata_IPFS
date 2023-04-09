@@ -138,7 +138,7 @@ function Navbar() {
       </nav>
       <div className="flex justify-center lg:justify-end mr-10">
         <div className={`text-white font-bold text-sm text-center lg:text-right ${currAddress !== "0x" ? "animate-bounce" : ""}`}>
-          {currAddress !== "0x" ? `Connected to ${currAddress.substring(0, 15)}...` : "Not Connected. Please login to view NFTs"}
+          {currAddress !== "0x" ? `Connected to ${currAddress.substring(0, 15)}...` : "Not Connected. Please agin login to view NFTs"}
         </div>
       </div>
     </div>
