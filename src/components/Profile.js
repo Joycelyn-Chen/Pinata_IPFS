@@ -71,12 +71,12 @@ export default function Profile () {
     // Rendering the Profile component
     return (
         <div className="profileClass" style={{ minHeight: "100vh" }}>
-          <Navbar />
-          <div className="profileClass flex flex-col items-center mt-11 text-white">
-            <div className="flex flex-col text-center mb-5 md:text-2xl">
-              <h2 className="font-bold">Wallet Address</h2>
-              {address}
-            </div>
+        <Navbar />
+        <div className="profileClass flex flex-col items-center mt-11 text-white">
+          <div className="flex flex-col text-center mb-5 md:text-2xl">
+            <h2 className="font-bold">Wallet Address</h2>
+            {address}
+          </div>
             <div className="flex flex-col text-center mb-5 md:text-2xl">
               <h2 className="font-bold">No. of NFTs</h2>
               {data.length}
