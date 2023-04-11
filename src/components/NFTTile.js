@@ -1,25 +1,27 @@
-import {
-    BrowserRouter as Router,
-    Link,
-  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function NFTTile (data) {
-    const newTo = {
-        pathname:"/nftPage/"+data.data.tokenId
-    }
-    return (
-        <Link to={newTo} className="border-2 ml-10 mr-10 mt-5 mb-12 flex flex-col items-center hover:opacity-50 rounded-lg">
-        <div className=" w-48 md:w-72 shadow-lg shadow-pink-200 ">
-            <img src={data.data.image} alt="" className="w-72 h-80 rounded-lg object-cover" />
-            <div className= "text-white w-full p-2 bg-gradient-to-t from-[#454545] to-transparent rounded-lg pt-5 -mt-20">
-                <strong className="text-xl">{data.data.name}</strong>
-                <p className="display-inline">
-                    {data.data.description}
-                </p>
-            </div>
-        </div>
-        </Link>
-    )
+
+function NFTTile(props) {
+  const { data } = props;
+  const newTo = {
+    pathname: "/nftPage/" + data.tokenId
+  };
+  
+  return (
+    <Link
+    to={newTo} className="block w-full max-w-xs mx-auto mb-8 bg-white shadow-md hover:shadow-lg rounded-lg overflow-hidden relative" style={{ marginLeft: "1px" }} >
+    <div className="relative" >
+      <img className="h-64 w-full object-cover" src={data.image} alt={data.name} />
+      <div className="absolute top-0 left-0 w-full h-full bg-black opacity-25 rounded-lg"></div>
+      <div className="absolute bottom-0 left-0 w-full flex flex-col justify-end px-4 py-2 bg-gray-100 opacity-75  hover:bg-black  transition-colors duration-100 overflow-y-auto">
+        <h3 className="text-gray-700 uppercase mb-2 hover:text-white">{data.name}</h3>
+        <span className="text-gray-500 hover:text-white">${data.price}</span>
+        <p className="text-gray-600 mb-4 hover:text-white">{data.description}</p>
+      </div>
+      <span className="absolute top-0 right-0 bg-yellow-500 bg-opacity-75 text-white font-bold py-2 px-4 rounded-bl">{data.price}</span>
+    </div>
+  </Link>
+  );
 }
 
 export default NFTTile;

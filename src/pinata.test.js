@@ -1,7 +1,6 @@
 const { uploadJSONToIPFS, uploadFileToIPFS } = require('./pinata.js');
 const fs = require('fs');
 const path = require('path');
-import image from './test-image.jpg';
 const { File } = require('node:fs');
 const axios = require('axios');
 const FormData = require('form-data');

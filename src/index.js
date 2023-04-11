@@ -12,18 +12,14 @@ import Marketplace from './components/Marketplace';
 import Profile from './components/Profile';
 import NFTPage from './components/NFTpage';
 import { SnackbarProvider } from 'notistack';
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
     <SnackbarProvider>
-      <Routes>
-        <Route path="/" element={<Marketplace />}/>
-        <Route path="/sellNFT" element={<SellNFT />}/> 
-        <Route path="/nftPage/:tokenId" element={<NFTPage />}/>        
-        <Route path="/profile" element={<Profile />}/> 
-      </Routes>
+      <App/>
       </SnackbarProvider>
     </BrowserRouter>
   </React.StrictMode>
