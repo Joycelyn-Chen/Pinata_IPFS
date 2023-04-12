@@ -4,7 +4,7 @@ import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from '../Marketplace.json';
 import { useSnackbar } from 'notistack';
 import { ColorRing } from 'react-loader-spinner'
-
+import PopupMessage from './PopupMessage';
 export default function SellNFT() {
 
 
@@ -14,55 +14,45 @@ export default function SellNFT() {
     // Import ethers.js library and initialize message state variable
     const ethers = require("ethers");
     const [message, updateMessage] = useState('');
-   
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
     const { enqueueSnackbar } = useSnackbar();
     // upload NFT image to IPFS
      
-    function Example() {
-      return (
-        <div style={{ backgroundColor: 'white', width: '500px' }}>
-          This is the content of the pop-up.
-        </div>
-      );
-    }
     async function OnChangeFile(e) {
-        // Check if price is greater than 0.01 ETH
         const price = parseFloat(formParams.price);
         if (price < 0.01) {
-            updateMessage('Price must be at least 0.01 ETH');
-            return;
+          setErrorMessage('Price must be at least 0.01 ETH');
+          return;
         }
-    
-        // Additional check for the price field
+      
         if (isNaN(price)) {
-            updateMessage('Price must be a number');
-            return;
+          setErrorMessage('Price must be a number');
+          return;
         }
-        updateMessage(`Uploading file to IPFS.........`);
-        var file = e.target.files[0];
+      
+        const file = e.target.files[0];
+        const allowedTypes = ['image/jpeg', 'image/png'];
+        if (!allowedTypes.includes(file.type)) {
+          setErrorMessage('File type not supported. Please upload a JPEG or PNG image.');
+          return;
+        }
+      
+        setSuccessMessage('Uploading file to IPFS.........');
         try {
-            const response = await uploadFileToIPFS(file);
-            if (response.success === true) {
-                const message = `Uploaded image to pinata: ${response.pinataURL}`;
-                updateMessage(message);
-                setTimeout(() => {
-                    updateMessage('');
-                }, 3000);
-                setFileURL(response.pinataURL);
-            }
-            else {
-                updateMessage('');
-            }
+          const response = await uploadFileToIPFS(file);
+          if (response.success === true) {
+            setSuccessMessage('Uploaded image to pinata');
+            setFileURL(response.pinataURL);
+          } else {
+            setErrorMessage('Error during file upload');
+          }
+        } catch (e) {
+          setErrorMessage(`Error during file upload ${e}`);
         }
-        catch (e) {
-            const message = `Error during file upload ${e}`;
-            updateMessage(message);
-            setTimeout(() => {
-                updateMessage('');
-            }, 2000);
-        }
-    }
-    
+      }
+        
     // Function to upload NFT metadata to IPFS
     async function uploadMetadataToIPFS() {
         const { name, description, price } = formParams;
@@ -225,20 +215,17 @@ export default function SellNFT() {
                         >
                             Upload Image
                         </label>
-                        <input type={"file"} onChange={OnChangeFile}></input>
+                        <input type={"file"} accept="image/*" capture="camera" onChange={OnChangeFile}></input>
                     </div>
                     <br></br>
-                    {message ? <ColorRing
-                        visible={true}
-                        height="80"
-                        width="80"
-                        ariaLabel="blocks-loading"
-                        wrapperStyle={{}}
-                        wrapperClass="blocks-wrapper"
-                        colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-                    /> :
-                        null}
-                    <div className="text-green text-center">{message}</div>
+                    <PopupMessage
+      message={errorMessage || successMessage}
+      isOpen={!!errorMessage || !!successMessage}
+      onRequestClose={() => {
+        setErrorMessage('');
+        setSuccessMessage('');
+      }}
+    />
                     <button
                         disabled={!formParams.name || !formParams.description || !formParams.price}
                         onClick={listNFT}

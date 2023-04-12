@@ -136,12 +136,18 @@ function Navbar() {
           </li>
         </ul>
       </nav>
-      <div className="flex justify-center lg:justify-end mr-10">
-        <div className={`text-white font-bold text-sm text-center lg:text-right ${currAddress !== "0x" ? "animate-bounce" : ""}`}>
-          {currAddress !== "0x" ? `Connected to ${currAddress.substring(0, 15)}...` : "Not Connected. Please agin login to view NFTs"}
-        </div>
-      </div>
-    </div>
+ <div className="flex justify-center lg:justify-end mr-10">
+  <div className={`text-gray-900 font-bold text-sm text-center lg:text-right ${currAddress !== "0x" ? "text-green-500" : "text-red-500"} hover:cursor-pointer`}>
+    {currAddress !== "0x" ? (
+      <span>
+        Connected to <span className="hover:underline">{currAddress}</span>
+      </span>
+    ) : (
+      "Not Connected. Please login again to view NFTs."
+    )}
+  </div>
+</div>
+</div>
   );
             }
 export default Navbar;
