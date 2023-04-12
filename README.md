@@ -41,7 +41,7 @@ npm start
 - Create a new NFT token by connecting to Goerli TestNet in MarketPlace
 - Buy an existing NFT token from the marketplace 
 
-# Bugs
+## Bugs
 - Environment Specific: Sometimes the .env variables are not set properly which might lead to failing of API calls in such cases just directly enter the secrets in `pinata.js` file.
 - UI bug: This is also happening in the local environment (won't be a problem in deployed env), even when the MetaMask wallet isn't connected to the app the button shows connected. Currently this is work in progress but one can still connect the wallet by clicking on the button.
 
