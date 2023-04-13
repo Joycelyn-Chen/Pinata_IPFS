@@ -81,7 +81,7 @@ export default function NFTPage (props) {
         <Navbar />
         <div className="flex ml-20 mt-20" style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
             <div className="text-xl ml-20 space-y-8 text-white shadow-2xl rounded-lg border-2 p-5 bg-gray-600">
-            <img src={data.image} alt="" className="w-2/5" />
+            <img src={data.image} alt="" className="w-2/5" style={{maxWidth:'250px', maxHeight:'350px'}}/>
                 <div>
                     Name: {data.name}
                 </div>

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from '../Marketplace.json';
 import { useSnackbar } from 'notistack';
-import { ColorRing } from 'react-loader-spinner'
 import PopupMessage from './PopupMessage';
 export default function SellNFT() {
 

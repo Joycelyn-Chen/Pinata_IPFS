@@ -19,7 +19,12 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
     <SnackbarProvider>
-      <App/>
+    <Routes>
+          <Route path="/" element={<Marketplace />}/>
+          <Route path="/nftPage/:tokenId" element={<NFTPage />}/>        
+          <Route path="/profile" element={<Profile />}/>
+          <Route path="/sellNFT" element={<SellNFT />}/>             
+        </Routes>
       </SnackbarProvider>
     </BrowserRouter>
   </React.StrictMode>

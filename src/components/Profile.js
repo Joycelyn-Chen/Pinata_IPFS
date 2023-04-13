@@ -72,7 +72,7 @@ export default function Profile () {
     return (
         <div className="profileClass" style={{ minHeight: "100vh" }}>
         <Navbar />
-        <div className="profileClass flex flex-col items-center mt-11 text-white">
+        <div className="profileClass flex flex-col items-center mt-11 text-black">
           <div className="flex flex-col text-center mb-5 md:text-2xl">
             <h2 className="font-bold">Wallet Address</h2>
             {address}
@@ -86,7 +86,7 @@ export default function Profile () {
               {totalPrice} ETH
             </div>
             <div className="flex flex-col text-center  items-center w-full">
-              <h2 className="font-bold">Your NFTs</h2>
+              <h2 className="font-bold md:text-2xl">Your NFTs</h2>
               <div className="flex flex-wrap justify-center w-full max-w-screen-xl">
                 {data.map((value, index) => {
                   return <NFTTile data={value} key={index}></NFTTile>;
