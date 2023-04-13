@@ -8,8 +8,8 @@ export const uploadJSONToIPFS = async(JSONBody) => {
     return axios 
         .post(url, JSONBody, {
             headers: {
-                pinata_api_key: "47907adfdee9fd043918",
-                pinata_secret_api_key: "6d091cd1be4b2271f560c0b695beda1b81b4ca43167939d57e22a8e0c8f9c319",
+                pinata_api_key: process.env.REACT_APP_PINATA_KEY,
+                pinata_secret_api_key: process.env.REACT_APP_PINATA_SECRET,
             }
         })
         .then(function (response) {
@@ -19,6 +19,7 @@ export const uploadJSONToIPFS = async(JSONBody) => {
            };
         })
         .catch(function (error) {
+            console.log(error)
             return {
                 success: false,
                 message: error.message,
@@ -65,17 +66,19 @@ export const uploadFileToIPFS = async(file) => {
             maxBodyLength: 'Infinity',
             headers: {
                 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-                pinata_api_key: "47907adfdee9fd043918",
-                pinata_secret_api_key: "6d091cd1be4b2271f560c0b695beda1b81b4ca43167939d57e22a8e0c8f9c319",
+                pinata_api_key: process.env.REACT_APP_PINATA_KEY,
+                pinata_secret_api_key: process.env.REACT_APP_PINATA_SECRET,
             }
         })
         .then(function (response) {
+            console.log("image uploaded", response.data.IpfsHash)
             return {
                success: true,
                pinataURL: "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash
            };
         })
         .catch(function (error) {
+            console.log(error)
             return {
                 success: false,
                 message: error.message,

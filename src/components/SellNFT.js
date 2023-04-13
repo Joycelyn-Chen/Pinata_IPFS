@@ -18,40 +18,45 @@ export default function SellNFT() {
 
     const { enqueueSnackbar } = useSnackbar();
     // upload NFT image to IPFS
-     
+
     async function OnChangeFile(e) {
         const price = parseFloat(formParams.price);
         if (price < 0.01) {
-          setErrorMessage('Price must be at least 0.01 ETH');
-          return;
+            setErrorMessage('Price must be at least 0.01 ETH');
+            e.target.value = '';
+            return;
         }
-      
+
         if (isNaN(price)) {
-          setErrorMessage('Price must be a number');
-          return;
+            setErrorMessage('Price must be a number');
+            e.target.value = '';
+            return;
         }
-      
+
         const file = e.target.files[0];
-        const allowedTypes = ['image/jpeg', 'image/png'];
+        const allowedTypes = ['image/jpeg', 'image/png','image/jpg'];
         if (!allowedTypes.includes(file.type)) {
-          setErrorMessage('File type not supported. Please upload a JPEG or PNG image.');
-          return;
+            setErrorMessage('File type not supported. Please upload a JPEG or PNG image.');
+            e.target.value = '';
+            return;
         }
-      
+
         setSuccessMessage('Uploading file to IPFS.........');
         try {
-          const response = await uploadFileToIPFS(file);
-          if (response.success === true) {
-            setSuccessMessage('Uploaded image to pinata');
-            setFileURL(response.pinataURL);
-          } else {
-            setErrorMessage('Error during file upload');
-          }
+            const response = await uploadFileToIPFS(file);
+            if (response.success === true) {
+                setSuccessMessage('Uploaded image to pinata');
+                setFileURL(response.pinataURL);
+            } else {
+                setErrorMessage('Error during file upload');
+                e.target.value = '';
+            }
         } catch (e) {
-          setErrorMessage(`Error during file upload ${e}`);
+            setErrorMessage(`Error during file upload ${e}`);
+            e.target.value = '';
         }
-      }
-        
+    }
+
     // Function to upload NFT metadata to IPFS
     async function uploadMetadataToIPFS() {
         const { name, description, price } = formParams;
@@ -65,12 +70,12 @@ export default function SellNFT() {
         try {
             const response = await uploadJSONToIPFS(nftJSON);
             if (response.success === true) {
-                enqueueSnackbar(`Uploaded JSON to Pinata: ${response.pinataURL}`, { autoHideDuration: 2000 });
+                setSuccessMessage(`Uploaded JSON to Pinata: ${response.pinataURL}`, { autoHideDuration: 2000 });
                 return response.pinataURL;
             }
         }
         catch (e) {
-            enqueueSnackbar(`error uploading JSON metadata: ${e}`, { autoHideDuration: 2000 });
+            setErrorMessage(`error uploading JSON metadata: ${e}`, { autoHideDuration: 2000 });
             return null;
         }
     }
@@ -82,13 +87,13 @@ export default function SellNFT() {
         // Check if price is greater than 0.01 ETH
         const price = parseFloat(formParams.price);
         if (price < 0.01) {
-            updateMessage('Price must be at least 0.01 ETH');
+            setErrorMessage('Price must be at least 0.01 ETH');
             return;
         }
 
         // Additional check for the price field
         if (isNaN(price)) {
-            updateMessage('Price must be a number');
+            setErrorMessage('Price must be a number');
             return;
         }
 
@@ -96,24 +101,24 @@ export default function SellNFT() {
         try {
             const metadataURL = await uploadMetadataToIPFS();
             if (metadataURL == null) {
-                updateMessage(`Please chekc all fields filled`);
+                setErrorMessage(`Please check all fields filled`);
                 return;
             }
-  // Get provider and signer from Web3 provider
+            // Get provider and signer from Web3 provider
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
-            updateMessage(`Please wait... uploading`);
+            setSuccessMessage(`Please wait... uploading`);
 
             // Initialize marketplace contract using address and ABI from JSON file
             let contract = new ethers.Contract(Marketplace.address, Marketplace.abi, signer);
-              // Convert NFT price to wei using ethers.js utility function
+            // Convert NFT price to wei using ethers.js utility function
             const price = ethers.utils.parseUnits(formParams.price, 'ether');
-           // Get listing price from marketplace contract
+            // Get listing price from marketplace contract
             let listingPrice = await contract.getListPrice();
             listingPrice = listingPrice.toString();
 
             // actually create the NFT
-              // Create the NFT and list it for sale on the marketplace
+            // Create the NFT and list it for sale on the marketplace
             let transaction = await contract.createToken(metadataURL, price, { value: listingPrice });
             await transaction.wait();
 
@@ -125,7 +130,13 @@ export default function SellNFT() {
             window.location.replace('/');
         }
         catch (e) {
-            enqueueSnackbar(`Upload error ${e}`, { autoHideDuration: 3000 });
+            setErrorMessage(`Upload error ${e}`, { autoHideDuration: 3000 });
+            updateFormParams({
+                name: '', description: '', price: ''
+              });
+              fileURL="";
+              
+
         }
     }
 
@@ -149,7 +160,7 @@ export default function SellNFT() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="name"
                             type="text"
-                            placeholder="Axie#4563"
+                            placeholder="NFT#2345"
                             onChange={(e) =>
                                 updateFormParams({ ...formParams, name: e.target.value })
                             }
@@ -172,7 +183,7 @@ export default function SellNFT() {
                             rows="5"
                             id="description"
                             type="text"
-                            placeholder="Axie Infinity Collection"
+                            placeholder="Crypto Emporium Collection"
                             value={formParams.description}
                             onChange={(e) =>
                                 updateFormParams({ ...formParams, description: e.target.value })
@@ -196,11 +207,12 @@ export default function SellNFT() {
                             type="number"
                             placeholder="Min 0.01 ETH"
                             step="0.01"
+                            min="0.01"
                             value={formParams.price}
                             onChange={(e) =>
                                 updateFormParams({ ...formParams, price: e.target.value })
                             }
-                        ></input>
+                        />
                         {!formParams.price && (
                             <div className="text-red-500 text-sm">
                                 Please enter a price.
@@ -218,13 +230,13 @@ export default function SellNFT() {
                     </div>
                     <br></br>
                     <PopupMessage
-      message={errorMessage || successMessage}
-      isOpen={!!errorMessage || !!successMessage}
-      onRequestClose={() => {
-        setErrorMessage('');
-        setSuccessMessage('');
-      }}
-    />
+                        message={errorMessage || successMessage}
+                        isOpen={!!errorMessage || !!successMessage}
+                        onRequestClose={() => {
+                            setErrorMessage('');
+                            setSuccessMessage('');
+                        }}
+                    />
                     <button
                         disabled={!formParams.name || !formParams.description || !formParams.price}
                         onClick={listNFT}

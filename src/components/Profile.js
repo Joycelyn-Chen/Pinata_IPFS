@@ -1,5 +1,5 @@
 // Importing required dependencies
-import Navbar from "./Navbar"; 
+import Navbar from "./Navbar";
 import { useLocation, useParams } from 'react-router-dom'; // Importing hooks from react-router-dom
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios"; // Importing Axios for making HTTP requests
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import NFTTile from "./NFTTile";
 
 // Declaring the Profile component
-export default function Profile () {
+export default function Profile() {
 
     // Initializing state variables
     const [data, updateData] = useState([]); // NFT data array
@@ -15,13 +15,13 @@ export default function Profile () {
     const [totalPrice, updateTotalPrice] = useState("0"); // Total value of NFTs
     const [dataFetched, updateFetched] = useState(false); // Boolean flag to check if data is fetched
     const params = useParams(); // Retrieving route parameters
-    useEffect(()=>{
-        
-         const tokenId = params.tokenId;
+    useEffect(() => {
+
+        const tokenId = params.tokenId;
         if (!dataFetched)
-        getNFTData(tokenId);
-    
-    },[dataFetched])
+            getNFTData(tokenId);
+
+    }, [dataFetched])
 
     // Async function to fetch NFT data
     async function getNFTData(tokenId) {
@@ -98,6 +98,6 @@ export default function Profile () {
             </div>
           </div>
         </div>
-      );
-      
+    );
+
 };
