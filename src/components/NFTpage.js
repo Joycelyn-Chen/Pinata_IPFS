@@ -1,34 +1,36 @@
 import Navbar from "./Navbar";
-import {  useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSnackbar } from 'notistack';
-
+import PopupMessage from './PopupMessage';
 // Defining and exporting a functional component
-export default function NFTPage (props) {
+export default function NFTPage(props) {
 
     // Initializing state variables using useState hook
     const [data, updateData] = useState({});
     const [dataFetched, updateDataFetched] = useState(false);
     const [message, updateMessage] = useState("");
     const [currAddress, updateCurrAddress] = useState("0x");
-    
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
     // Using the useParams hook from react-router-dom to get the tokenId from the URL parameters
     const params = useParams();
     const tokenId = params.tokenId;
 
     // Using the useEffect hook to get NFT data when the component mounts
-    useEffect(()=>{
+    useEffect(() => {
         if (!dataFetched)
             getNFTData(tokenId);
-        },[dataFetched])
+    }, [dataFetched])
     const { enqueueSnackbar } = useSnackbar();
     async function getNFTData(tokenId) {
         const ethers = require('ethers');
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
-        
+
         // Creating an instance of the Marketplace contract using the contract address and ABI from Marketplace.json
         let contract = new ethers.Contract(MarketplaceJSON.address, MarketplaceJSON.abi, signer);
 
@@ -60,7 +62,7 @@ export default function NFTPage (props) {
             const ethers = require('ethers');
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
-            
+
             // Creating an instance of the Marketplace contract using the contract address and ABI from Marketplace.json
             let contract = new ethers.Contract(MarketplaceJSON.address, MarketplaceJSON.abi, signer);
 
@@ -69,47 +71,54 @@ export default function NFTPage (props) {
             let transaction = await contract.executeSale(tokenId, { value: salePrice });
             await transaction.wait();
 
-            enqueueSnackbar('You successfully bought the NFT!',{ autoHideDuration:3000 });
-        } catch(e) {
-            enqueueSnackbar(`Upload Error ${e}`,{ autoHideDuration: 3000 });
+            setSuccessMessage('You successfully bought the NFT!', { autoHideDuration: 3000 });
+        } catch (e) {
+            setErrorMessage(`Upload Error ${e}`, { autoHideDuration: 3000 });
         }
     }
 
     // Returning the JSX code for the NFT page
-    return(
-        <div style={{minHeight: "100vh"}}>
-        <Navbar />
-        <div className="flex ml-20 mt-20" style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
-            <div className="text-xl ml-20 space-y-8 text-white shadow-2xl rounded-lg border-2 p-5 bg-gray-600">
-            <img src={data.image} alt="" className="w-2/5" />
-                <div>
-                    Name: {data.name}
-                </div>
-                <div>
-                    Description: {data.description}
-                </div>
-                <div>
-                    Price: <span className="text-green-400">{data.price + " ETH"}</span>
-                </div>
-                <div>
-                    Owner: <span className="text-sm text-gray-400">{data.owner}</span>
-                </div>
-                <div>
-                    Seller: <span className="text-sm text-gray-400">{data.seller}</span>
-                </div>
-                <div>
-                { !data.name || !data.description || !data.price || !data.owner || !data.seller ?
-                    <button className="bg-gray-400 cursor-not-allowed text-white font-bold py-2 px-4 rounded text-sm opacity-50" disabled>Buy this NFT</button>
-                    : currAddress == data.owner || currAddress == data.seller ?
-                        <div className="text-emerald-700">You are the owner of this NFT</div>
-                        : <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>Buy this NFT</button>
-                }
-                
-                <div className="text-green-400 text-center mt-3">{message}</div>
+    return (
+        <div style={{ minHeight: "100vh" }}>
+            <Navbar />
+            <div className="flex justify-center items-center mt-20">
+                <div className="w-full max-w-lg p-6 space-y-6 bg-gray-600 rounded-lg shadow-lg">
+                    <img src={data.image} alt="" className="w-full h-72 object-cover rounded-md" />
+                    <div className="text-white mt-6">
+                        <div className="text-xl font-bold mb-2">{data.name}</div>
+                        <div className="text-sm mb-2">{data.description}</div>
+                        <div className="text-sm text-gray-400 mb-2">Price: <span className="text-green-400">{data.price} ETH</span></div>
+                        <div className="text-sm text-gray-400 mb-2">Owner: {data.owner}</div>
+                        <div className="text-sm text-gray-400 mb-2">Seller: {data.seller}</div>
+                    </div>
+                    <div>
+                        {!data.name || !data.description || !data.price || !data.owner || !data.seller ? (
+                            <button className="bg-gray-400 cursor-not-allowed text-white font-bold py-2 px-4 rounded text-sm opacity-50" disabled>
+                                Buy this NFT
+                            </button>
+                        ) : currAddress == data.owner || currAddress == data.seller ? (
+                            <div className="text-emerald-700">You are the owner of this NFT</div>
+                        ) : (
+                            <button className="enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm" onClick={() => buyNFT(tokenId)}>
+                                Buy this NFT
+                            </button>
+                            
+                        )}
+                        <br></br>
+                    <PopupMessage
+                        message={errorMessage || successMessage}
+                        isOpen={!!errorMessage || !!successMessage}
+                        onRequestClose={() => {
+                            setErrorMessage('');
+                            setSuccessMessage('');
+                        }}
+                    />
+                        <div className="text-green-400 text-center mt-3">{message}</div>
+                    </div>
                 </div>
             </div>
+
         </div>
-    </div>
-    
+
     )
 }

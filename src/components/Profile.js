@@ -1,5 +1,5 @@
 // Importing required dependencies
-import Navbar from "./Navbar"; 
+import Navbar from "./Navbar";
 import { useLocation, useParams } from 'react-router-dom'; // Importing hooks from react-router-dom
 import MarketplaceJSON from "../Marketplace.json";
 import axios from "axios"; // Importing Axios for making HTTP requests
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import NFTTile from "./NFTTile";
 
 // Declaring the Profile component
-export default function Profile () {
+export default function Profile() {
 
     // Initializing state variables
     const [data, updateData] = useState([]); // NFT data array
@@ -15,13 +15,13 @@ export default function Profile () {
     const [totalPrice, updateTotalPrice] = useState("0"); // Total value of NFTs
     const [dataFetched, updateFetched] = useState(false); // Boolean flag to check if data is fetched
     const params = useParams(); // Retrieving route parameters
-    useEffect(()=>{
-        
-         const tokenId = params.tokenId;
+    useEffect(() => {
+
+        const tokenId = params.tokenId;
         if (!dataFetched)
-        getNFTData(tokenId);
-    
-    },[dataFetched])
+            getNFTData(tokenId);
+
+    }, [dataFetched])
 
     // Async function to fetch NFT data
     async function getNFTData(tokenId) {
@@ -71,33 +71,36 @@ export default function Profile () {
     // Rendering the Profile component
     return (
         <div className="profileClass" style={{ minHeight: "100vh" }}>
-        <Navbar />
-        <div className="profileClass flex flex-col items-center mt-11 text-white">
-          <div className="flex flex-col text-center mb-5 md:text-2xl">
-            <h2 className="font-bold">Wallet Address</h2>
-            {address}
-          </div>
-            <div className="flex flex-col text-center mb-5 md:text-2xl">
-              <h2 className="font-bold">No. of NFTs</h2>
-              {data.length}
+            <Navbar />
+            <div className="profileClass flex flex-col items-center mt-11 text-white bg-gray-500 bg-opacity-50 p-10 rounded-xl">
+                <div className="flex flex-col text-center mb-5 md:text-2xl">
+                    <h2 className="font-bold">Wallet Address</h2>
+                    {address}
+                </div>
+                <div className="flex flex-col text-center mb-5 md:text-2xl">
+                    <h2 className="font-bold">No. of NFTs</h2>
+                    {data.length}
+                </div>
+                <div className="flex flex-col text-center mb-10 md:text-2xl">
+                    <h2 className="font-bold">Total Value</h2>
+                    {totalPrice} ETH
+                </div>
+                <div className="flex flex-col text-center w-full">
+                    <h2 className="font-bold">Your NFTs</h2>
+                    <div className="flex flex-wrap justify-center w-full max-w-screen-xl">
+                        {data.map((value, index) => {
+                            return <NFTTile data={value} key={index}></NFTTile>;
+                        })}
+                    </div>
+                    <div className="mt-10 text-xl">
+                        {data.length == 0 ? "Oops, No NFT data to display (Are you logged in?)" : ""}
+                    </div>
+                </div>
             </div>
-            <div className="flex flex-col justify-center text-center mb-10 md:text-2xl">
-              <h2 className="font-bold">Total Value</h2>
-              {totalPrice} ETH
-            </div>
-            <div className="flex flex-col text-center  items-center w-full">
-              <h2 className="font-bold">Your NFTs</h2>
-              <div className="flex flex-wrap justify-center w-full max-w-screen-xl">
-                {data.map((value, index) => {
-                  return <NFTTile data={value} key={index}></NFTTile>;
-                })}
-              </div>
-              <div className="mt-10 text-xl">
-                {data.length == 0 ? "Oops, No NFT data to display (Are you logged in?)" : ""}
-              </div>
-            </div>
-          </div>
+
+
+
         </div>
-      );
-      
+    );
+
 };

@@ -1,5 +1,13 @@
 import fullLogo from '../app_logo.png';
-import {Link, useLocation} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams,
+  useLocation
+} from "react-router-dom";
 import { useEffect, useState } from 'react';
 
 function Navbar() {
@@ -62,7 +70,7 @@ function Navbar() {
     }
 
     let val = window.ethereum.isConnected();
-    console.log("val"+val);
+
     if (val) {
       // If the user is connected, get their address and update the "Connect Wallet" button
       getAddress();
@@ -119,7 +127,7 @@ function Navbar() {
                   </li>
                 )}
                 <li>
-                  <button className={`enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-300 ease-in-out ${connected ? "bg-green-500" : "bg-yellow-500 hover:bg-yellow-600"}`} onClick={connectWebsite}>
+                  <button className={`enableEthereumButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm transition-all duration-800 ease-in-out ${connected ? "bg-green-500" : "bg-yellow-500 hover:bg-yellow-600"}`} onClick={connectWebsite}>
                     {connected ? "Connected" : "Connect Wallet"}
                   </button>
                 </li>
@@ -141,5 +149,5 @@ function Navbar() {
 </div>
 </div>
   );
-}
+            }
 export default Navbar;
