@@ -28,6 +28,14 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
+  "jest":{
+    "collectCoverage":true,
+    "coverageReporters":[
+      "json",
+      "lcov",
+      "text"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
