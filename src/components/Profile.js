@@ -81,11 +81,11 @@ export default function Profile () {
               <h2 className="font-bold">No. of NFTs</h2>
               {data.length}
             </div>
-            <div className="flex flex-col text-center mb-10 md:text-2xl">
+            <div className="flex flex-col justify-center text-center mb-10 md:text-2xl">
               <h2 className="font-bold">Total Value</h2>
               {totalPrice} ETH
             </div>
-            <div className="flex flex-col text-center w-full">
+            <div className="flex flex-col text-center  items-center w-full">
               <h2 className="font-bold">Your NFTs</h2>
               <div className="flex flex-wrap justify-center w-full max-w-screen-xl">
                 {data.map((value, index) => {
