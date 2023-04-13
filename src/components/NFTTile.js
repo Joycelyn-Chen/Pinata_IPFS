@@ -9,7 +9,7 @@ function NFTTile(props) {
   
   return (
     <Link
-    to={newTo} className="block w-full max-w-xs mx-auto mb-8 bg-white shadow-md hover:shadow-lg rounded-lg overflow-hidden relative" style={{ marginLeft: "1px" }} >
+    to={newTo} className="block w-full max-w-xs mr-20 items-center mb-8 bg-white shadow-md hover:shadow-lg rounded-lg overflow-hidden relative" style={{ marginLeft: "1px" }} >
     <div className="relative" >
       <img className="h-64 w-full object-cover" src={data.image} alt={data.name} />
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-25 rounded-lg"></div>
