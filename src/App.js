@@ -13,7 +13,7 @@ import {
 
 function App() {
   return (
-    <div className="container">
+    <div className="container-fluid no-padding">
       
         <Routes>
           <Route path="/" element={<Marketplace />}/>
