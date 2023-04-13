@@ -1,13 +1,5 @@
 import fullLogo from '../app_logo.png';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-  useLocation
-} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import { useEffect, useState } from 'react';
 
 function Navbar() {
@@ -70,7 +62,7 @@ function Navbar() {
     }
 
     let val = window.ethereum.isConnected();
-
+    console.log("val"+val);
     if (val) {
       // If the user is connected, get their address and update the "Connect Wallet" button
       getAddress();
@@ -149,5 +141,5 @@ function Navbar() {
 </div>
 </div>
   );
-            }
+}
 export default Navbar;
