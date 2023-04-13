@@ -3,7 +3,6 @@ import { useState } from "react";
 import { uploadFileToIPFS, uploadJSONToIPFS } from "../pinata";
 import Marketplace from '../Marketplace.json';
 import { useSnackbar } from 'notistack';
-import { ColorRing } from 'react-loader-spinner'
 import PopupMessage from './PopupMessage';
 export default function SellNFT() {
 
@@ -35,7 +34,7 @@ export default function SellNFT() {
         }
 
         const file = e.target.files[0];
-        const allowedTypes = ['image/jpeg', 'image/png'];
+        const allowedTypes = ['image/jpeg', 'image/png','image/jpg'];
         if (!allowedTypes.includes(file.type)) {
             setErrorMessage('File type not supported. Please upload a JPEG or PNG image.');
             e.target.value = '';

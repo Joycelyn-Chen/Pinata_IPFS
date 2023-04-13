@@ -92,9 +92,9 @@ exports[`Navbar tests renders Navbar component 1`] = `
     className="flex justify-center lg:justify-end mr-10"
   >
     <div
-      className="text-white font-bold text-sm text-center lg:text-right "
+      className="text-gray-900 font-bold text-sm text-center lg:text-right text-red-500 hover:cursor-pointer"
     >
-      Not Connected. Please agin login to view NFTs
+      Not Connected. Please login again to view NFTs.
     </div>
   </div>
 </div>

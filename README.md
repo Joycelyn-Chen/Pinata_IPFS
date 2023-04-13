@@ -20,6 +20,7 @@ run the below command
 git clone https://github.com/Joycelyn-Chen/Pinata_IPFS.git
 cd Pinata_IPFS
 npm install
+npm install react-modal
 npm start
 ```
 
