@@ -53,3 +53,8 @@ npm start
 - Implementing End-to-End (E2E) Testing: Jest can be used to write E2E tests that simulate user interactions with the app, covering scenarios such as creating NFTs, buying and selling NFTs on the marketplace, and managing the NFT wallet.
 - Dockerizing the app 
 - Enhanced Marketplace Features: Implementing advanced marketplace features such as auctions, bidding, and offers to provide more flexibility and options for users to buy and sell NFTs.
+
+
+# Contributions
+- This is an extension work from the github source: https://github.com/SoftTalents/PetDog_NFT_Marketplace.
+- The code owners from above have directly given us permission to use, and modify their code.
